@@ -1,32 +1,27 @@
-from pytube import YouTube
+
 import tkinter as tk
-
-root = tk.Tk()
-canvas1 = tk.Canvas(root, width=400, height=300, relief='raised',bg="#44617b")
-root.title="YouTube video downloader"
-canvas1.pack()
-
-label1 = tk.Label(root, text='YouTube video downloader')
-label1.config(bg="#44617b", fg="white",font=('helvetica', 14))
-canvas1.create_window(200, 25, window=label1)
-
-label2 = tk.Label(root, text='Input URL')
-label2.config(bg="#44617b", fg="white",font=('helvetica', 10))
-canvas1.create_window(200, 100, window=label2)
-
-entry1 = (tk.Entry(root))
-canvas1.create_window(200, 140, window=entry1)
+from pytube import YouTube
 
 
-def getURL():
-    entry1.get()
-    link=str(entry1)
-    video = YouTube(link)
-    stream = video.streams.get_highest_resolution()
-    stream.download()
+def Download_Video():
+    url = YouTube(str(link.get()))
+    video = url.streams.first()
+    video.download()
+    tk.Label(window, text='Your Video has downloaded', font='arial 20', fg="White", bg="#44617b").place(x=140, y=250)
 
-button1 = tk.Button(text='Download', command=getURL, bg='white', fg='black',
-                    font=('helvetica', 9, 'bold'))
-canvas1.create_window(200, 180, window=button1)
 
-root.mainloop()
+window = tk.Tk()
+window.geometry("600x400")
+window.config(bg="#44617b")
+window.resizable(width=False, height=False)
+window.title('YouTube Video Downloader')
+window.iconbitmap("youtubeLogo.ico")
+
+link = tk.StringVar()
+tk.Label(window, text='Youtube Video Downloader', font='arial 20 bold',
+         fg="White", bg="#44617b").pack()
+tk.Label(window, text='Link URL', font='arial 20 bold', fg="white", bg="#44617b").place(x=250, y=60)
+link_enter = tk.Entry(window, width=30, textvariable=link, font='arial 15 bold', bg="white").place(x=140, y=100)
+tk.Button(window, text='DOWNLOAD VIDEO', font='arial 15 bold', fg="black", bg='white', padx=2,command=Download_Video).place(x=210, y=160)
+
+window.mainloop()
