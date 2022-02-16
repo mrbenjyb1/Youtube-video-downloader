@@ -2,13 +2,11 @@
 import tkinter as tk
 from pytube import YouTube
 
-
 def Download_Video():
     url = YouTube(str(link.get()))
     video = url.streams.first()
     video.download()
     tk.Label(window, text='Your Video has downloaded', font='arial 20', fg="White", bg="#44617b").place(x=140, y=250)
-
 
 window = tk.Tk()
 window.geometry("600x400")
